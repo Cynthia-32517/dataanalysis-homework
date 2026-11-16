@@ -155,8 +155,8 @@ else:
 
 season_text = get_season(start_date, end_date)
 
-# 预处理：把日期转为数值，用于拟合趋势
-df_all["日期数值"] = df_all["日期"].astype("int64") / 1e9 / 86400
+# 预处理：把日期转为相对天数（从起始日起算，单位明确为天，避免纳秒/微秒单位错位）
+df_all["日期数值"] = (df_all["日期"] - df_all["日期"].min()).dt.days
 
 # ===================== 分 Tab 展示，上课演示逻辑清晰 =====================
 tab1, tab2, tab3, tab4 = st.tabs([
